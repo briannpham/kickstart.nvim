@@ -256,7 +256,82 @@ require('lazy').setup({
   --    require('gitsigns').setup({ ... })
   --
   -- See `:help gitsigns` to understand what the configuration keys do
-    "tpope/vim-fugitive",
+  {
+    'tpope/vim-fugitive',
+    config = function()
+      vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
+    end,
+  },
+  {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      local harpoon = require 'harpoon'
+      harpoon:setup()
+      -- -- basic telescope configuration
+      -- local conf = require('telescope.config').values
+      -- local function toggle_telescope(harpoon_files)
+      --   local file_paths = {}
+      --   for _, item in ipairs(harpoon_files.items) do
+      --     table.insert(file_paths, item.value)
+      --   end
+      --
+      --   require('telescope.pickers')
+      --     .new({}, {
+      --       prompt_title = 'Harpoon',
+      --       finder = require('telescope.finders').new_table {
+      --         results = file_paths,
+      --       },
+      --       previewer = conf.file_previewer {},
+      --       sorter = conf.generic_sorter {},
+      --     })
+      --     :find()
+      -- end
+
+      vim.keymap.set('n', '<C-e>', function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end)
+
+      -- vim.keymap.set('n', '<C-e>', function()
+      --   toggle_telescope(harpoon:list())
+      -- end, { desc = 'Open harpoon window' })
+
+      vim.keymap.set('n', '<leader>a', function()
+        harpoon:list():add()
+      end)
+      vim.keymap.set('n', '<leader>r', function()
+        harpoon:list():remove()
+      end)
+      vim.keymap.set('n', 'H', function()
+        harpoon:list():select(1)
+      end)
+      vim.keymap.set('n', 'J', function()
+        harpoon:list():select(2)
+      end)
+      vim.keymap.set('n', 'K', function()
+        harpoon:list():select(3)
+      end)
+      vim.keymap.set('n', 'L', function()
+        harpoon:list():select(4)
+      end)
+
+      -- Toggle previous & next buffers stored within Harpoon list
+      vim.keymap.set('n', '<C-S-P>', function()
+        harpoon:list():prev()
+      end)
+      vim.keymap.set('n', '<C-S-N>', function()
+        harpoon:list():next()
+      end)
+    end,
+  },
+  {
+    'mbbill/undotree',
+
+    config = function()
+      vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
+    end,
+  },
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -432,6 +507,7 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
+      vim.keymap.set('n', '<C-p>', builtin.git_files, {})
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })

@@ -197,6 +197,12 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 
+vim.keymap.set('x', '<leader>p', '"_dP', { desc = 'Paste without yanking' })
+
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move line down' })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move line up' })
+vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join line below without moving cursor' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -261,7 +267,7 @@ require('lazy').setup({
   {
     'tpope/vim-fugitive',
     config = function()
-      vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
+      vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = 'Open [G]it status' })
     end,
   },
   {
@@ -293,7 +299,7 @@ require('lazy').setup({
 
       vim.keymap.set('n', '<C-e>', function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
-      end)
+      end, { desc = 'Toggle harpoon window' })
 
       -- vim.keymap.set('n', '<C-e>', function()
       --   toggle_telescope(harpoon:list())
@@ -301,22 +307,28 @@ require('lazy').setup({
 
       vim.keymap.set('n', '<leader>a', function()
         harpoon:list():add()
-      end)
+      end, { desc = 'Add [A] file to harpoon' })
       vim.keymap.set('n', '<leader>r', function()
         harpoon:list():remove()
-      end)
-      vim.keymap.set('n', 'H', function()
+      end, { desc = '[R]emove all files from harpoon' })
+      vim.keymap.set('n', '<leader>h1', function()
         harpoon:list():select(1)
-      end)
-      vim.keymap.set('n', 'J', function()
+      end, { desc = 'Select [H]arpoon file 1' })
+      vim.keymap.set('n', '<leader>h2', function()
         harpoon:list():select(2)
-      end)
-      vim.keymap.set('n', 'K', function()
+      end, { desc = 'Select [H]arpoon file 2' })
+      vim.keymap.set('n', '<leader>h3', function()
         harpoon:list():select(3)
-      end)
-      vim.keymap.set('n', 'L', function()
+      end, { desc = 'Select [H]arpoon file 3' })
+      vim.keymap.set('n', '<leader>h4', function()
         harpoon:list():select(4)
-      end)
+      end, { desc = 'Select [H]arpoon file 4' })
+      vim.keymap.set('n', '<leader>h5', function()
+        harpoon:list():select(5)
+      end, { desc = 'Select [H]arpoon file 5' })
+      vim.keymap.set('n', '<leader>h6', function()
+        harpoon:list():select(6)
+      end, { desc = 'Select [H]arpoon file 6' })
 
       -- Toggle previous & next buffers stored within Harpoon list
       vim.keymap.set('n', '<C-S-P>', function()
@@ -331,7 +343,7 @@ require('lazy').setup({
     'mbbill/undotree',
 
     config = function()
-      vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
+      vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = 'Toggle [U]ndo tree' })
     end,
   },
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
@@ -509,8 +521,8 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<C-p>', builtin.git_files, {})
-      vim.keymap.set('n', '<leader>gc', builtin.git_commits, {})
+      vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = '[G]it [F]iles' })
+      vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = '[G]it [C]ommits' })
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })

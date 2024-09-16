@@ -21,6 +21,10 @@ return {
         return conf
       end,
     },
+    view_options = {
+      -- Show files and directories that start with "."
+      show_hidden = true,
+    },
   },
   -- Optional dependencies
   dependencies = { { 'echasnovski/mini.icons', opts = {} } },

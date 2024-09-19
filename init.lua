@@ -205,6 +205,10 @@ vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join line below without moving curso
 
 vim.keymap.set('n', '-', '<CMD>Oil --float<CR>', { desc = 'Open parent directory' })
 
+-- Enter a new line above/below without entering Insert mode
+vim.keymap.set('n', '<leader>n', '<CMD>put _<CR>')
+vim.keymap.set('n', '<leader>N', '<CMD>put! _<CR>')
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -577,7 +581,7 @@ require('lazy').setup({
       local servers = {
         clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -803,6 +807,17 @@ require('lazy').setup({
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
+    end,
+    config = function()
+      require('catppuccin').setup {
+        highlight_overrides = {
+          all = function(colors)
+            return {
+              LineNr = { fg = colors.rosewater },
+            }
+          end,
+        },
+      }
     end,
   },
 
